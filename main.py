@@ -10,7 +10,7 @@ def main():
     matchesDatabase = database.connect("noschemas")
     matches = matchesDatabase.find({"queueType": "TEAM_BUILDER_RANKED_SOLO"}, limit=3)
 
-    dataSetPlaceholder = pd.DataFrame()
+    dataSet = pd.DataFrame()
     for leagueOfLegendsMatch in matches:
 
         goldDeltas = dataframes.goldDeltaDataFrame(leagueOfLegendsMatch)
@@ -25,7 +25,7 @@ def main():
                                 jungleMinionsKilled,
                                 championIds], axis=1)
 
-        dataSet = dataSetPlaceholder.append(dataFrames, ignore_index=True)
+        dataSet = dataSet.append(dataFrames, ignore_index=True)
 
     dataSet.dropna(inplace=True)
     dataSet.reset_index(inplace=True)
