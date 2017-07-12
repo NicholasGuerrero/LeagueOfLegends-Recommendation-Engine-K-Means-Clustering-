@@ -10,7 +10,7 @@ def main():
     "This is the main function. It all starts here."
 
     matchesDatabase = database.connect("noschemas")
-    matches = matchesDatabase.find({"queueType": "TEAM_BUILDER_RANKED_SOLO"}, limit=3)
+    matches = matchesDatabase.find({"queueType": "TEAM_BUILDER_RANKED_SOLO"})
 
     dataSet = pd.DataFrame()
     for leagueOfLegendsMatch in matches:
