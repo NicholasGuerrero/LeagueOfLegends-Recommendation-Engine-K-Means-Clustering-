@@ -1,7 +1,11 @@
 """This file contains all functions that create dataframes."""
+#pylint: disable=C0103
 from libs import gold
 from libs import championId as champIdLib
 from libs import resources
+from libs import items
+from libs import matchId
+from libs import timestamp
 import pandas as pd
 import numpy as np
 
@@ -167,7 +171,6 @@ def championIdDataFrame(match):
         match (dict): One match from the league of legends API. See Riot API Docs for details.
     Returns:
         DataFrame: The champion played at each frame.
-    Example:
     """
 
     championIds = {}
@@ -175,7 +178,6 @@ def championIdDataFrame(match):
     for participant in match["participants"]:
         participantId = participant["participantId"]
         championIds["p%d_ChampionId" % participantId] = []
-        # if participantId ==
         championId = champIdLib.findChampionId(match, participant["participantId"])
         for _ in range(0, len(match["timeline"]["frames"])):
             championIds["p%d_ChampionId" % participantId].append(championId)
@@ -183,3 +185,53 @@ def championIdDataFrame(match):
     championIds = pd.DataFrame(championIds)
 
     return championIds
+
+def itemsDataFrame(match):
+    """
+    Args:
+        match (dict): One match from the league of legends API. See Riot API Docs for details.
+    Returns:
+        DataFrame: The items each participant bought during a match
+    """
+
+    itemsInAGame = {}
+
+    for participant in match["participants"]:
+        participantId = participant["participantId"]
+        itemsOfAParticipant = items.findItems(match, participant["participantId"])
+        itemsInAGame["p%d_items" % participantId] = itemsOfAParticipant
+
+    itemsInAGame = pd.DataFrame(itemsInAGame)
+
+    return itemsInAGame
+
+def matchIdsDataFrame(match):
+    """
+    Args:
+        match (dict): One match from the league of legends API. See Riot API Docs for details.
+    Returns:
+        DataFrame: The matchId for each frame the frame belongs to.
+    """
+
+    matchIds = []
+
+    for _ in range(0, len(match["timeline"]["frames"])):
+        matchIds.append(matchId.findMatchId(match))
+
+    matchIds = pd.DataFrame(matchIds)
+    matchIds.columns = ["matchId"]
+
+    return matchIds
+
+def timeStampDataFrame(match):
+    """
+    Args:
+        match (dict): One match from the league of legends API. See Riot API Docs for details.
+    Returns:
+        DataFrame: The timestamp for each frame in a match.
+    """
+
+    timestamps = pd.DataFrame(timestamp.findTimestamp(match))
+    timestamps.columns = ["Timestamps"]
+
+    return timestamps
