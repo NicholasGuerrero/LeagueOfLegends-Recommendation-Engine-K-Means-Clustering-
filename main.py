@@ -35,9 +35,12 @@ def main():
 
         dataSet = dataSet.append(dataFrames, ignore_index=True)
 
-    # dataSet.dropna(inplace=True)
+    dataSet.dropna(inplace=True)
     dataSet.reset_index(inplace=True, drop=True)
-    print(dataSet)
+
+    pickleOut = open("LeagueOfLegendsClusteringDataSet.pickle", "wb")
+    pickle.dump(dataSet, pickleOut)
+    pickleOut.close()
 
 if __name__ == "__main__":
     main()
