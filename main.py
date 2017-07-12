@@ -1,4 +1,4 @@
-"""This is where it all starts to create the random forests model."""
+"""This is where it all starts to create the K-Means Clustering model."""
 #pylint: disable=C0103
 from libs import database
 from libs import dataframes
