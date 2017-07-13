@@ -2,3 +2,6 @@
 
 __pycache__/
 *.pyc
+
+# Ignore mac attribute files
+.DS_Store
