@@ -11,11 +11,8 @@ def main():
     "This is the main function. It all starts here."
 
     matchesDatabase = database.connect("noschemas")
-<<<<<<< HEAD
+
     matches = matchesDatabase.find({"queueType": "TEAM_BUILDER_RANKED_SOLO"}, limit=2)
-=======
-    matches = matchesDatabase.find({"queueType": "TEAM_BUILDER_RANKED_SOLO"})
->>>>>>> 3256574527b8444b44592ff3c0b43a9c1ced829b
 
     dataSet = pd.DataFrame()
     for leagueOfLegendsMatch in matches:
@@ -42,19 +39,13 @@ def main():
 
     dataSet.dropna(inplace=True)
     dataSet.reset_index(inplace=True, drop=True)
-<<<<<<< HEAD
+
     print(dataSet[0:10])
 
     # pickleOut = open("LeagueOfLegendsClusteringDataSet.pickle", "wb")
     # pickle.dump(dataSet, pickleOut)
     # pickleOut.close()
 
-=======
-
-    pickleOut = open("LeagueOfLegendsClusteringDataSet.pickle", "wb")
-    pickle.dump(dataSet, pickleOut)
-    pickleOut.close()
->>>>>>> 3256574527b8444b44592ff3c0b43a9c1ced829b
 
 if __name__ == "__main__":
     main()
